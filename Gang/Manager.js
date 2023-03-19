@@ -214,19 +214,7 @@ function GiveAssignments(ns, gangInfo, memberarray) {
 			else
 				task = ns.gang.getTaskStats("Train Combat");
 		}
-		else if (gangInfo.wantedPenalty < 0.9) {
-			//reduce Wanted
-			let min = Number.MAX_VALUE;
-			for (let tn of ns.gang.getTaskNames()) {
-				let TI = ns.gang.getTaskStats(tn);
 
-				let WG = ns.formulas.gang.wantedLevelGain(gangInfo, member, TI)
-				if (WG < min) {
-					min = WG;
-					task = TI;
-				}
-			}
-		}
 		else if (earnedRespect < 10000) {
 			// Raise Respect
 			let max = Number.MIN_VALUE;
@@ -236,6 +224,19 @@ function GiveAssignments(ns, gangInfo, memberarray) {
 				let res = ns.formulas.gang.respectGain(gangInfo, member, TI);
 				if (res > max) {
 					max = res;
+					task = TI;
+				}
+			}
+		}
+		else if (gangInfo.wantedPenalty < 0.9) {
+			//reduce Wanted
+			let min = Number.MAX_VALUE;
+			for (let tn of ns.gang.getTaskNames()) {
+				let TI = ns.gang.getTaskStats(tn);
+
+				let WG = ns.formulas.gang.wantedLevelGain(gangInfo, member, TI)
+				if (WG < min) {
+					min = WG;
 					task = TI;
 				}
 			}
